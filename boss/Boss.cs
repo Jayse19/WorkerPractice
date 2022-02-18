@@ -22,28 +22,29 @@ if (app.Environment.IsDevelopment())
 app.MapPost("/enlist", (EnlistRequest enlistRequest, ILogger<Program> logger) =>
 {
     logger.LogInformation($"Received {enlistRequest}");
+    return "This is your boss";
 })
 .WithName("enlist");
 
 
-app.MapGet("/done", (DoneWorking doneWorking, ILogger<Program> logger) =>
-{
-    logger.LogInformation($"Received {doneWorking}");
-})
-.WithName("done");
+// app.MapGet("/done", (DoneWorking doneWorking, ILogger<Program> logger) =>
+// {
+//     logger.LogInformation($"Received {doneWorking}");
+// })
+// .WithName("done");
 
 
-app.MapGet("/start", (StartWorking startWorking, ILogger<Program> logger) =>
-{
-    logger.LogInformation($"Received {startWorking}");
-})
-.WithName("start");
+// app.MapGet("/start", (StartWorking startWorking, ILogger<Program> logger) =>
+// {
+//     logger.LogInformation($"Received {startWorking}");
+// })
+// .WithName("start");
 
 
-app.MapGet("/status", (Status status, ILogger<Program> logger) =>
-{
-    logger.LogInformation($"Received {status}");
-})
-.WithName("status");
+// app.MapGet("/status", (Status status, ILogger<Program> logger) =>
+// {
+//     logger.LogInformation($"Received {status}");
+// })
+// .WithName("status");
 
 app.Run();

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using shared;
+using worker;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
+builder.Services.AddHostedService<WorkerBackgroundService>();
+builder.Services.AddSingleton<WorkerState>();
 
 var app = builder.Build();
 
@@ -26,10 +29,4 @@ app.MapPost("/move", ([FromBody]Location destination, ILogger<Program> logger) =
 })
 .WithName("move");
 
-app.MapGet("/wakeup", (IConfiguration config, HttpClient httpClient) =>
-{
-    var enlistRequest = new EnlistRequest("http://localhost", 5178);
-    httpClient.PostAsJsonAsync($"{config["BOSS"]}/enlist", enlistRequest);
-})
-.WithName("wakeup");
 app.Run();
