@@ -60,7 +60,7 @@ namespace worker
             var httpClient = new HttpClient();
             var token = await httpClient.PostAsJsonAsync($"{config["BOSS"]}/enlist", enlistRequest);
             workerState.Token = await token.Content.ReadAsStringAsync();
-            logger.LogInformation("Token is {token}", workerState.Token);
+            logger.LogInformation("Your Token is: {token}", workerState.Token);
         }
     }
 }

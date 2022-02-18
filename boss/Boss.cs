@@ -1,4 +1,5 @@
 using shared;
+using boss;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<BossLogic>();
 
 var app = builder.Build();
 
@@ -22,16 +24,13 @@ if (app.Environment.IsDevelopment())
 app.MapPost("/enlist", (EnlistRequest enlistRequest, ILogger<Program> logger) =>
 {
     logger.LogInformation($"Received {enlistRequest}");
-    return "This is your boss";
+    return "This is your boss, you're FIRED";
 })
 .WithName("enlist");
 
 
-// app.MapGet("/done", (DoneWorking doneWorking, ILogger<Program> logger) =>
-// {
-//     logger.LogInformation($"Received {doneWorking}");
-// })
-// .WithName("done");
+app.MapGet("/start", (string password, BossLogic bossLogic) => bossLogic.StartRunning(password))
+.WithName("start");
 
 
 // app.MapGet("/start", (StartWorking startWorking, ILogger<Program> logger) =>
